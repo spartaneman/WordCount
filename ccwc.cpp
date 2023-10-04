@@ -44,9 +44,9 @@ int main(int argc, char *argv[]){
             int tBytes = 0;
             char character;
             inputStream.open(argv[2]);
-            while(inputStream >> character){
+            while(inputStream.get(character)){
                 
-                if(isgraph(character)){
+                if(isprint(character)){
                     tBytes += 1;
                 }
             }
