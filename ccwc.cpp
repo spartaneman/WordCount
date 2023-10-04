@@ -10,10 +10,12 @@ int main(int argc, char *argv[]){
 
     //Check that that there are 3 arguments passed in. 
     //This includes the executable file name, flag and text filename
-    if(argc != 3){
+    if(argc != 3 && argc != 2){
         cout << "Usage: " << argv[0] << " -flag filename";
         exit(-1);
     }
+
+
 
     /*Step one: Check that there are 3 arguments
       Step Two: string compare using strcmp(const *char[], const *char[]) through
@@ -30,17 +32,29 @@ int main(int argc, char *argv[]){
       final test is to read from the input stream 
       Linux: cat test.txt | ccwc -l 
       */
-    char tBytes[] {"-l"};
-    cout << strcmp(argv[1], tBytes) << endl;
-    char word[] {"a bc"};
-    int count = 0;
-    for(auto w: word){
-        cout << w << ": ";
-        if(isgraph(w)){
-            count += 1;
+
+
+    //If there are three arguments then a flag has been included
+    if(argc == 3){
+        ifstream inputStream;
+        //Step Two: Control Flow through if, else statements 
+        //String compare
+        if(strcmp(argv[1], "-c") == 0){
+            int byteSize = sizeof(char);
+            int tBytes = 0;
+            char character;
+            inputStream.open(argv[2]);
+            while(inputStream >> character){
+                
+                if(isgraph(character)){
+                    tBytes += 1;
+                }
+            }
+            cout << tBytes * byteSize;
+            exit(-1);
         }
     }
-    cout << "byte count is " << count << endl;
+    
 
      
     return 0;
