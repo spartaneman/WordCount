@@ -57,9 +57,11 @@ int main(int argc, char *argv[]){
             cout << getLines(inputStream, argv[2]);
             exit(0);
         }
+        else if(strcmp(argv[1], "-m") == 0){
+            cout << getCharacters(inputStream, argv[2]);
+            exit(0);
+        }
     }
-    
-
      
     return 0;
 }
@@ -79,6 +81,7 @@ int getBytes(ifstream &inputStream, const string &file){
                 tBytes += 1;
         }
     }
+    inputStream.close();
     return tBytes * byteSize;
 }
 
@@ -95,6 +98,7 @@ int getLines(ifstream &inputStream, const string &file)
     while(getline(inputStream, line)){
         totalLines +=1;
     }
+    inputStream.close();
     return totalLines;
 }
 
@@ -103,10 +107,12 @@ int getLines(ifstream &inputStream, const string &file)
  *Return: totalBytes
  *Function calculates total number of words in the file. 
  * */
-int getWords(ifstream &, const string &file){
+int getWords(ifstream &inputStream, const string &file){
     int words = 0;
-
-
+    //create a vector of characters
+    //create a character *word[] 
+    //create a string. 
+    
     return words;
 }
 
@@ -115,9 +121,16 @@ int getWords(ifstream &, const string &file){
  *Return: totalBytes
  *Function calculates total number of characters in the file. 
  * */
-int getCharacters(ifstream &, const string &file){
+int getCharacters(ifstream &inputStream, const string &file){
     int characters = 0;
-
+    char letter;
+    inputStream.open(file); 
+    while(inputStream.get(letter)){
+        if(isprint(letter)){
+            characters += 1;
+        }
+    }
+    inputStream.close();
     return characters;
 }
 
@@ -126,6 +139,6 @@ int getCharacters(ifstream &, const string &file){
  *Return: totalBytes
  *Function calculates total number of lines in the file. 
  * */
-void getAll(ifstream &, string &file){
-    
+void getAll(ifstream &inputStream, string &file){
+
 }
