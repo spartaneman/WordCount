@@ -65,10 +65,17 @@ int main(int argc, char *argv[]){
             cout << getWords(inputStream, argv[2]);
         }
         else{
-            cout << getBytes(inputStream, argv[2]) << " ";
-            cout << getLines(inputStream, argv[2]) << " ";
-            cout << getWords(inputStream, argv[2]) << " ";
+           getAll(inputStream, argv[2]);
         }
+    }
+    if(argc == 2){
+        ifstream inpuStream;
+        int size = 0;
+        string value = argv[1];
+        if(value.size() > 3){
+            getAll(inpuStream, argv[1]);
+        }
+        
     }
      
     return 0;
@@ -83,6 +90,7 @@ int getBytes(ifstream &inputStream, const string &file){
     int byteSize = sizeof(char);
     int tBytes = 0;
     char character;
+    try{
     inputStream.open(file);
     while(inputStream.get(character)){
         if(isprint(character)){
@@ -90,6 +98,9 @@ int getBytes(ifstream &inputStream, const string &file){
         }
     }
     inputStream.close();
+    }catch(exception& e){
+        cerr << "Error: " << e.what() << endl;
+    }
     return tBytes * byteSize;
 }
 
@@ -102,11 +113,15 @@ int getLines(ifstream &inputStream, const string &file)
 {
     int totalLines = 0;
     string line;
-    inputStream.open(file);
-    while(getline(inputStream, line)){
-        totalLines +=1;
+    try{
+        inputStream.open(file);
+        while(getline(inputStream, line)){
+            totalLines +=1;
+        }
+        inputStream.close();
+    }catch(exception& e){
+        cerr << "Error: " << e.what() << endl;
     }
-    inputStream.close();
     return totalLines;
 }
 
@@ -122,25 +137,26 @@ int getWords(ifstream &inputStream, const string &file){
     string word ="";
     string number = "";
 
+    try{
     inputStream.open(file); 
     char letter;
     while(getline(inputStream, line)){
         word = "";
         number = "";
-        //go through the string character by character
-        //if not digit, alpha or apostrophe, ignore it
-        //add to the string 
-        //if reach none character then check the size of the string, if greater than 1 add
-        //if blank space add. 
+       
+
 
         for(auto letter: line){
+            //build strings until either a blank character is found or a non-alpha or digit is found
+            //add to the total word count
             if(isalpha(letter)){
                 word.append(1, letter);
             }else if(isdigit(letter)){
                 number.append(1, letter);
             }
-            //Check when an apostrophe appears and make sure that it was 
-            //preceded by a letter
+            //Check when an apostrophe appears and make sure that it was preceded by a letter
+
+            //TODO add checks for periods and what to do for websites. 
             else if(letter == '\'' && word.size() > 0){
                 word.append(1, letter);
             }
@@ -159,8 +175,11 @@ int getWords(ifstream &inputStream, const string &file){
                 number = "";
             }
         }
-    }   
-    
+    }  
+    inputStream.close(); 
+    }catch(exception& e){
+        cerr << "Error: " << e.what() << endl;
+    }
     return wordCount;
 }
 
@@ -172,13 +191,18 @@ int getWords(ifstream &inputStream, const string &file){
 int getCharacters(ifstream &inputStream, const string &file){
     int characters = 0;
     char letter;
-    inputStream.open(file); 
-    while(inputStream.get(letter)){
-        if(isprint(letter)){
-            characters += 1;
+    try{
+        inputStream.open(file); 
+        while(inputStream.get(letter)){
+            if(isprint(letter)){
+                characters += 1;
+            }
         }
+        inputStream.close();
+    }catch(exception& e){
+        cerr << "Error: " << e.what() << endl;
     }
-    inputStream.close();
+    
     return characters;
 }
 
@@ -187,6 +211,8 @@ int getCharacters(ifstream &inputStream, const string &file){
  *Return: totalBytes
  *Function calculates total number of lines in the file. 
  * */
-void getAll(ifstream &inputStream, string &file){
-
+void getAll(ifstream &inputStream, const string &file){
+    cout << getBytes(inputStream, file) << " ";
+    cout << getLines(inputStream, file) << " ";
+    cout << getWords(inputStream, file) << " ";
 }
