@@ -61,6 +61,14 @@ int main(int argc, char *argv[]){
             cout << getCharacters(inputStream, argv[2]);
             exit(0);
         }
+        else if(strcmp(argv[1], "-w") == 0){
+            cout << getWords(inputStream, argv[2]);
+        }
+        else{
+            cout << getBytes(inputStream, argv[2]) << " ";
+            cout << getLines(inputStream, argv[2]) << " ";
+            cout << getWords(inputStream, argv[2]) << " ";
+        }
     }
      
     return 0;
@@ -108,12 +116,52 @@ int getLines(ifstream &inputStream, const string &file)
  *Function calculates total number of words in the file. 
  * */
 int getWords(ifstream &inputStream, const string &file){
-    int words = 0;
-    //create a vector of characters
-    //create a character *word[] 
-    //create a string. 
+
+    int wordCount = 0;
+    string line = "";
+    string word ="";
+    string number = "";
+
+    inputStream.open(file); 
+    char letter;
+    while(getline(inputStream, line)){
+        word = "";
+        number = "";
+        //go through the string character by character
+        //if not digit, alpha or apostrophe, ignore it
+        //add to the string 
+        //if reach none character then check the size of the string, if greater than 1 add
+        //if blank space add. 
+
+        for(auto letter: line){
+            if(isalpha(letter)){
+                word.append(1, letter);
+            }else if(isdigit(letter)){
+                number.append(1, letter);
+            }
+            //Check when an apostrophe appears and make sure that it was 
+            //preceded by a letter
+            else if(letter == '\'' && word.size() > 0){
+                word.append(1, letter);
+            }
+            else if(letter == ' '){
+                if(word.size() > 0 || number.size() > 0){
+                    wordCount += 1;
+                }
+                word = "";
+                number = "";
+            }
+            else{
+                if(word.size() > 0 || number.size() > 0){
+                    wordCount += 1;
+                }
+                word = "";
+                number = "";
+            }
+        }
+    }   
     
-    return words;
+    return wordCount;
 }
 
 /*
