@@ -6,15 +6,15 @@
 
 using namespace std;
 
-int getBytes(ifstream &, char *file[]);
+int getBytes(ifstream &, const string &file);
 
-int getLines(ifstream &, char *file[]);
+int getLines(ifstream &, const string &file);
 
-int getWords(ifstream &, char *file[]);
+int getWords(ifstream &, const string &file);
 
-int getCharacters(ifstream &, char *file[]);
+int getCharacters(ifstream &, const string &file);
 
-void getAll(ifstream &, char *file[]);
+void getAll(ifstream &, const string &file);
 
 int main(int argc, char *argv[]){
 
@@ -50,28 +50,11 @@ int main(int argc, char *argv[]){
         //Step Two: Control Flow through if, else statements 
         //String compare
         if(strcmp(argv[1], "-c") == 0){
-            int byteSize = sizeof(char);
-            int tBytes = 0;
-            char character;
-            inputStream.open(argv[2]);
-            while(inputStream.get(character)){
-                
-                if(isprint(character)){
-                    tBytes += 1;
-                }
-            }
-            cout << tBytes * byteSize;
+            cout << getBytes(inputStream, argv[2]);
             exit(0);
         }
         else if(strcmp(argv[1], "-l") == 0){
-            int totalLines = 0;
-            string line;
-            inputStream.open(argv[2]);
-            while(getline(inputStream, line)){
-                totalLines +=1;
-            }
-
-            cout << totalLines;
+            cout << getLines(inputStream, argv[2]);
             exit(0);
         }
     }
@@ -79,4 +62,70 @@ int main(int argc, char *argv[]){
 
      
     return 0;
+}
+
+/*
+ *Params: ifstream, string file
+ *Return: totalBytes
+ *Function calculates total number of bytes in the file. 
+ * */
+int getBytes(ifstream &inputStream, const string &file){
+    int byteSize = sizeof(char);
+    int tBytes = 0;
+    char character;
+    inputStream.open(file);
+    while(inputStream.get(character)){
+        if(isprint(character)){
+                tBytes += 1;
+        }
+    }
+    return tBytes * byteSize;
+}
+
+/*
+ *Params: ifstream, string file
+ *Return: totalBytes
+ *Function calculates total number of lines in the file. 
+ * */
+int getLines(ifstream &inputStream, const string &file)
+{
+    int totalLines = 0;
+    string line;
+    inputStream.open(file);
+    while(getline(inputStream, line)){
+        totalLines +=1;
+    }
+    return totalLines;
+}
+
+/*
+ *Params: ifstream, string file
+ *Return: totalBytes
+ *Function calculates total number of words in the file. 
+ * */
+int getWords(ifstream &, const string &file){
+    int words = 0;
+
+
+    return words;
+}
+
+/*
+ *Params: ifstream, string file
+ *Return: totalBytes
+ *Function calculates total number of characters in the file. 
+ * */
+int getCharacters(ifstream &, const string &file){
+    int characters = 0;
+
+    return characters;
+}
+
+/*
+ *Params: ifstream, string file
+ *Return: totalBytes
+ *Function calculates total number of lines in the file. 
+ * */
+void getAll(ifstream &, string &file){
+    
 }
