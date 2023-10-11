@@ -6,6 +6,16 @@
 
 using namespace std;
 
+int getBytes(ifstream &, char *file[]);
+
+int getLines(ifstream &, char *file[]);
+
+int getWords(ifstream &, char *file[]);
+
+int getCharacters(ifstream &, char *file[]);
+
+void getAll(ifstream &, char *file[]);
+
 int main(int argc, char *argv[]){
 
     //Check that that there are 3 arguments passed in. 
@@ -51,7 +61,18 @@ int main(int argc, char *argv[]){
                 }
             }
             cout << tBytes * byteSize;
-            exit(-1);
+            exit(0);
+        }
+        else if(strcmp(argv[1], "-l") == 0){
+            int totalLines = 0;
+            string line;
+            inputStream.open(argv[2]);
+            while(getline(inputStream, line)){
+                totalLines +=1;
+            }
+
+            cout << totalLines;
+            exit(0);
         }
     }
     
