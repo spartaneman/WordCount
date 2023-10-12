@@ -4,6 +4,7 @@
 #include <cctype>
 #include <typeinfo>
 
+//TODO implement a direct file stream
 using namespace std;
 
 int getBytes(ifstream &, const string &file);
